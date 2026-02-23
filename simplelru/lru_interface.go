@@ -1,7 +1,7 @@
 package simplelru
 
-// LruCache is the interface for a simple Lru implementation.
-type LruCache[K comparable, V any] interface {
+// LruCacher is the interface for a simple Lru implementation.
+type LruCacher[K comparable, V any] interface {
 	// Add adds a value to the cache and returns true if an eviction occurred
 	// and updates the recently usedness of the key.
 	Add(key K, val V) bool
