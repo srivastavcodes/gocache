@@ -8,7 +8,7 @@ type Entry[K comparable, V any] struct {
 	// is implemented as a ring, meaning the root element is both the next
 	// element of the last list's element and the first of the previous
 	// list's element.
-	next, prev *Entry[K, V]
+	prev, next *Entry[K, V]
 
 	// The list to which this element belongs.
 	list *LruList[K, V]

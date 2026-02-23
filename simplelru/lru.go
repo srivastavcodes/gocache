@@ -91,6 +91,58 @@ func (lru *LruCache[K, V]) Peek(key K) (val V, ok bool) {
 	return entry.Val, true
 }
 
+// Len returns the number of items in the cache.
+func (lru *LruCache[K, V]) Len() int {
+	return lru.evictList.Length()
+}
+
+// Cap returns the size of the cache.
+func (lru *LruCache[K, V]) Cap() int {
+	return lru.size
+}
+
+// Keys returns a slice of keys containing all the keys from the cache from
+// oldest to newest.
+func (lru *LruCache[K, V]) Keys() []K {
+	keys := make([]K, lru.evictList.Length())
+	i := 0
+	entry := lru.evictList.Back()
+	for entry != nil {
+		keys[i] = entry.Key
+		i++
+		entry = entry.PrevEntry()
+	}
+	return keys
+}
+
+// Vals returns a slice of keys containing all the keys from the cache from
+// oldest to newest.
+func (lru *LruCache[K, V]) Vals() []V {
+	vals := make([]V, lru.evictList.Length())
+	i := 0
+	entry := lru.evictList.Back()
+	for entry != nil {
+		vals[i] = entry.Val
+		i++
+		entry = entry.PrevEntry()
+	}
+	return vals
+}
+
+// Resize resizes the cache to the provided size; and returns the number of
+// items evicted.
+func (lru *LruCache[K, V]) Resize(size int) (evictCount int) {
+	diff := lru.Len() - size
+	if size < 0 {
+		size = 0
+	}
+	for i := 0; i < diff; i++ {
+		lru.removeOldest()
+	}
+	lru.size = size
+	return lru.size
+}
+
 // Remove removes the key from the cache.
 func (lru *LruCache[K, V]) Remove(key K) (present bool) {
 	if entry, present := lru.items[key]; present {

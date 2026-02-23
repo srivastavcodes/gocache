@@ -28,17 +28,17 @@ type LruCacher[K comparable, V any] interface {
 	// isFound
 	GetOldest() (K, V, bool)
 
-	// Keys returns a slice of the keys in the cache, from oldest to newest.
-	Keys() []K
-
-	// Values returns a slice of the values in the cache, from oldest to newest.
-	Values() []V
-
 	// Len returns the number of items in the cache.
 	Len() int
 
 	// Cap returns the capacity of the cache.
 	Cap() int
+
+	// Keys returns a slice of the keys in the cache, from oldest to newest.
+	Keys() []K
+
+	// Vals returns a slice of the values in the cache, from oldest to newest.
+	Vals() []V
 
 	// Purge clears all cache entries.
 	Purge()
