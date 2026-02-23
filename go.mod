@@ -1,3 +1,3 @@
-module github.com/srivastavcodes/go-lru
+module github.com/srivastavcodes/gocache
 
 go 1.25

@@ -3,7 +3,7 @@ package simplelru
 import (
 	"errors"
 
-	"github.com/srivastavcodes/go-lru/dll"
+	"github.com/srivastavcodes/gocache/dll"
 )
 
 // EvictCallback is used to get a callback when a cache entry is evicted.
